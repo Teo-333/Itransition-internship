@@ -1,1 +1,1 @@
-var a=process.argv.slice(2);if(!a.length){console.log("");return;}a.sort((x,y)=>x.length - y.length);var m=a[0];for(var l=m.length;l>0;l--){for(var i=0;i<=m.length - l;i++){var s=m.substr(i,l);if(a.every((str)=>str.includes(s))){console.log(s);return;}}}console.log("");
+with(console){p=process,a=p.argv,s=a.slice(2);if(!s.length){log();p.exit();}m=s.sort((a,b)=>a.length-b.length)[0];for(l=m.length;l;l--)for(i=0;i<=m.length-l;i++){t=m.substr(i,l);if(s.every(x=>x.includes(t))){log(t);p.exit();}}log('');}
