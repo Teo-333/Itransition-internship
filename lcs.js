@@ -1,1 +1,1 @@
-with(console){p=process,a=p.argv,s=a.slice(2);if(!s.length)p.exit();for(l=s[0].length;l--;){for(i=0;i<=s[0].length-l;i++)if(s.every(x=>x.includes(t=s[0].slice(i,l+i+1))))return log(t),p.exit()}log``}
+with(console){p=process;(s=p.argv.slice(2))[0]||p.exit();A=s[0];for(l=A.length+1;--l;)for(i=0;i<=A.length-l;i++)s.every(x=>x.includes(t=A.slice(i,i+l)))&&(log(t),p.exit())}
