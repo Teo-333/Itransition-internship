@@ -1,11 +1,11 @@
 import chalk from 'chalk';
 
-const readlineSync = require('readline-sync');
-const RandomGenerator = require('../services/RandomGenerator');
-const GameRules = require('../services/GameRules');
+import readlineSync from 'readline-sync';
+import RandomGenerator from '../services/RandomGenerator.js';
+import GameRules from '../services/GameRules.js';
 
 
-class GameController {
+export default class GameController {
   constructor(diceList) {
     this.diceList = diceList;
     this.randomGenerator = new RandomGenerator();
@@ -100,5 +100,3 @@ class GameController {
     this.gameRules.determineWinner(this.playerDice, this.computerDice, playerFaceIndex, computerFaceIndex);
   }
 }
-
-module.exports = GameController;

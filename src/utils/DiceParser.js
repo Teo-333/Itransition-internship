@@ -1,7 +1,7 @@
 import chalk from 'chalk';
-const Dice = require('../models/Dice');
+import Dice from '../models/Dice.js'
 
-class DiceParser {
+export default class DiceParser {
   constructor(args) {
     this.args = args;
   }
@@ -25,5 +25,3 @@ class DiceParser {
     return /^(\d+,)*\d+$/.test(diceString);
   }
 }
-
-module.exports = DiceParser;

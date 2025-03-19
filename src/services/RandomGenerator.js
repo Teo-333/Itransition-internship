@@ -1,10 +1,10 @@
 import chalk from 'chalk';
 
-const readlineSync = require('readline-sync');
-const SecretKeyGenerator = require('../crypto/SecretKeyGenerator');
-const HmacGenerator = require('../crypto/HMACGenerator');
+import readlineSync from 'readline-sync';
+import SecretKeyGenerator from '../crypto/SecretKeyGenerator.js';
+import HmacGenerator from '../crypto/HMACGenerator.js';
 
-class RandomGenerator {
+export default class RandomGenerator {
   constructor() {
     this.keyGenerator = new SecretKeyGenerator();
   }
@@ -17,15 +17,15 @@ class RandomGenerator {
     const hmacGenerator = new HmacGenerator(secretKey);
     const hmac = hmacGenerator.generateHmac(computerNumber);
     
-    console.log(chalk.cyan,`I selected a random value in the range 0..${range - 1}`);
-    console.log(chalk.magenta,`(HMAC=${hmac}).`);
-    console.log(chalk.cyan,prompt);
+    console.log(chalk.cyan(`I selected a random value in the range 0..${range - 1}`));
+    console.log(chalk.magenta(`(HMAC=${hmac}).`));
+    console.log(chalk.cyan(prompt));
     
     this.displayOptions(range);
     const userInput = this.getUserInput(range);
     
     if (userInput === 'X') {
-      console.log(chalk.yellow,"Exiting the game. Thank you for playing!");
+      console.log(chalk.yellow("Exiting the game. Thank you for playing!"));
       process.exit(0);
     } else if (userInput === '?') {
       this.showHelp();
@@ -71,4 +71,3 @@ class RandomGenerator {
   }
 }
 
-module.exports = RandomGenerator;

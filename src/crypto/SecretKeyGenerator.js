@@ -1,9 +1,7 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 
-class SecretKeyGenerator {
+export default class SecretKeyGenerator {
   generateKey() {
     return crypto.randomBytes(32).toString('hex').toUpperCase();
   }
 }
-
-module.exports = SecretKeyGenerator;

@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-class GameRules {
+export default class GameRules {
     determineWinner(playerDice, computerDice, playerFaceIndex, computerFaceIndex) {
       const playerValue = playerDice.getFaceValue(playerFaceIndex);
       const computerValue = computerDice.getFaceValue(computerFaceIndex);
@@ -21,4 +21,3 @@ class GameRules {
     }
   }
   
-  module.exports = GameRules;

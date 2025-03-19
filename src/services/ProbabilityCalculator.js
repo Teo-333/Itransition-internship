@@ -1,4 +1,4 @@
-class ProbabilityCalculator {
+export default class ProbabilityCalculator {
     constructor(allDice) {
       this.allDice = allDice;
     }
@@ -37,4 +37,3 @@ class ProbabilityCalculator {
     }
   }
   
-  module.exports = ProbabilityCalculator;

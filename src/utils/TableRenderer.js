@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 
-const Table = require('cli-table3');
+import Table from 'cli-table3';
 
-class TableRenderer {
+export default class TableRenderer {
   renderProbabilityTable(diceList, probabilityMatrix) {
     console.log(chalk.blueBright("Probability of the win for the user:"));
     
@@ -34,5 +34,3 @@ class TableRenderer {
     console.log();
   }
 }
-
-module.exports = TableRenderer;

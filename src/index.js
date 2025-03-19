@@ -1,9 +1,8 @@
 import chalk from 'chalk';
-
-const DiceParser = require('./utils/DiceParser');
-const GameController = require('./controllers/GameController');
-const ProbabilityCalculator = require('./services/ProbabilityCalculator');
-const TableRenderer = require('./utils/TableRenderer');
+import DiceParser from './utils/DiceParser.js';
+import GameController from './controllers/GameController.js';
+import ProbabilityCalculator from './services/ProbabilityCalculator.js';
+import TableRenderer from './utils/TableRenderer.js';
 
 function main() {
   try {
