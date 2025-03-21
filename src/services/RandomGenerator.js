@@ -53,10 +53,10 @@ export default class RandomGenerator {
   
   getUserInput(range) {
     const validResponses = [...Array(range).keys()].map(i => i.toString()).concat(['X', '?']);
-    return readlineSync.question(chalk.cyan("Your selection: ", {
+    return readlineSync.question(chalk.cyan("Your selection: "), {
       limit: validResponses,
       limitMessage: chalk.cyan(`Invalid input. Please enter a number between 0 and ${range - 1}, X to exit, or ? for help.`
-    )})).toUpperCase();
+    )}).toUpperCase();
   }
   
   showHelp() {
