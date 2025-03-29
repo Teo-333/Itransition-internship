@@ -12,17 +12,17 @@ const LoginPage = () => {
     try {
       const data = await loginUser(email, password);
       localStorage.setItem("token", data.token);
-      navigate("/");
+      navigate("/dashboard");
     } catch (error: any) {
       alert(error.response.data.error || 'Login failed.');
     }
   };
 
   return (
-    <Container className="mt-10 space-y-4">
+    <Container className="mt-10 space-y-4 flex-col gap-4 flex w-full">
       <Typography variant="h4">Login</Typography>
-      <TextField label="Email" fullWidth onChange={(e) => setEmail(e.target.value)} />
-      <TextField label="Password" type="password" fullWidth onChange={(e) => setPassword(e.target.value)} />
+      <TextField label="Email" type='email' fullWidth onChange={(e) => {setEmail(e.target.value); console.log('value changed', email)}} required />
+      <TextField label="Password" type="password" fullWidth onChange={(e) => setPassword(e.target.value)} required  />
       <Button variant="contained" onClick={handleLogin}>Login</Button>
       <Typography><Link to="/register">Register here</Link></Typography>
     </Container>

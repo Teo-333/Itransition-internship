@@ -8,6 +8,11 @@ export const registerUser = async (email: string, password: string) => {
 };
 
 export const loginUser = async (email: string, password: string) => {
-  const response = await axios.post(`${API_URL}/login`, { email, password });
-  return response.data;
+  try {
+    const response = await axios.post(`${API_URL}/login`, { email, password });
+    return response.data;
+  } catch (error: any) {
+    console.error('Login error:', error.response.data);
+    throw error;
+  }
 };

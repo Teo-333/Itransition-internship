@@ -25,14 +25,16 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    console.log('Login attempt:', { email, password });
     const userQuery = await pool.query(`SELECT * FROM users WHERE email = $1`, [email]);
     const user = userQuery.rows[0];
-
-    if (!user) return res.status(400).json({ error: 'Invalid credentials.' });
+    console.log('User found:', user);
+    
+    if (!user) return res.status(400).json({ msg: "User not exist" })
 
     const isValid = await bcrypt.compare(password, user.password);
 
-    if (!isValid) return res.status(400).json({ error: 'Invalid credentials.' });
+    if (!isValid) return res.status(400).json({ error: 'Incorrect password' });
 
     const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '1h' });
 
