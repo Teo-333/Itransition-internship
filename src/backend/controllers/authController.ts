@@ -1,12 +1,13 @@
-import pool from '../utils/db';
-import * as bcrypt from 'bcrypt';
-import * as jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { pool } from '../server';
 
-export const register = async (req, res) => {
+export const register = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
+    const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await pool.query(
       `INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email`,
       [email, hashedPassword]
@@ -15,17 +16,19 @@ export const register = async (req, res) => {
     res.status(201).json(newUser.rows[0]);
   } catch (error: any) {
     if (error.code === '23505') {
-      return res.status(400).json({ error: 'Email already exists.' });
+      res.status(400).json({ error: 'Email already exists.' });
+      return;
     }
     res.status(500).json({ error: 'Server error.' });
   }
 };
 
-export const login = async (req, res) => {
+export const login = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res.status(400).json({ error: 'Email and password are required.' });
+    res.status(400).json({ error: 'Email and password are required.' });
+    return;
   }
 
   try {
@@ -33,18 +36,18 @@ export const login = async (req, res) => {
     const user = userQuery.rows[0];
 
     if (!user) {
-      return res.status(400).json({ error: 'Invalid credentials.' });
+      res.status(400).json({ error: 'Invalid credentials.' });
+      return;
     }
-
     if (user.blocked) {
-      // Explicitly return if the user is blocked
-      return res.status(403).json({ error: 'This user is blocked.' });
+      res.status(403).json({ error: 'This user is blocked.' });
+      return;
     }
 
     const isValid = await bcrypt.compare(password, user.password);
-
     if (!isValid) {
-      return res.status(400).json({ error: 'Invalid credentials.' });
+      res.status(400).json({ error: 'Invalid credentials.' });
+      return;
     }
 
     const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '1h' });
@@ -53,7 +56,6 @@ export const login = async (req, res) => {
 
     res.json({ token });
   } catch (error) {
-    console.error('Login backend error:', error);
     res.status(500).json({ error: 'Server error.' });
   }
 };
