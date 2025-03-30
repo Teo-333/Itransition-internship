@@ -28,7 +28,7 @@ const UserTable: React.FC<Props> = ({ users, selected, onSelectAll, onSelectRow,
                 onChange={(e) => onSelectAll(e.target.checked)}
               />
             </TableCell>
-            <TableCell>Name</TableCell>
+            <TableCell>ID</TableCell>
             <TableCell>Email</TableCell>
             <TableCell>
               <TableSortLabel active direction={order} onClick={onSort}>
@@ -47,7 +47,7 @@ const UserTable: React.FC<Props> = ({ users, selected, onSelectAll, onSelectRow,
                   onChange={() => onSelectRow(user.id)}
                 />
               </TableCell>
-              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.id}</TableCell>
               <TableCell>{user.email}</TableCell>
               <TableCell>{new Date(user.lastLoggedIn).toLocaleString()}</TableCell>
               <TableCell>
