@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, TextField, Container, Typography, Paper } from "@mui/material";
-import { registerUser } from "../services/AuthService";
+import { registerUser } from "../services/AuthService.js";
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");

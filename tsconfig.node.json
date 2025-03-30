@@ -1,17 +1,23 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "ES2022",
-    "lib": ["ES2022"],
     "module": "ES2022",
     "moduleResolution": "Node",
-    "allowImportingTsExtensions": false,
-    "isolatedModules": false,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noEmit": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "skipLibCheck": true,
+    "rootDir": "./src/backend",
+    "outDir": "./dist/backend",
+    "sourceMap": true,
+    "composite": true
   },
-  "include": ["src/backend/**/*.ts", "vite.config.ts"]
+  "include": [
+    "src/backend/**/*.ts",
+    "src/backend/**/*.tsx"
+  ],
+  "exclude": [
+    "dist/backend"
+  ]
 }
+

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { pool } from '../server';
+import { pool } from '../server.js';
 
 export const getUsers = async (req: Request, res: Response) => {
   const order = req.query.order === 'desc' ? 'DESC' : 'ASC';
