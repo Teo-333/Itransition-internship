@@ -3,11 +3,15 @@ import UserTable from '../components/UserTable';
 import UserToolbar from '../components/UserToolbar';
 import { User } from '../../types/User';
 import axios from 'axios';
+import { Button } from '@mui/material';
+import { useTheme } from '../context/ThemeContext';
 
 const UserManagementPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selected, setSelected] = useState<number[]>([]);
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     fetchUsers();
@@ -51,21 +55,29 @@ const UserManagementPage: React.FC = () => {
   };
 
   return (
-    <div className="p-4">
-      <UserToolbar
-        onBlock={handleBlock}
-        onUnblock={handleUnblock}
-        onDelete={handleDelete}
-        selectedCount={selected.length}
-      />
-      <UserTable
-        users={users}
-        selected={selected}
-        onSelectAll={handleSelectAll}
-        onSelectRow={handleSelectRow}
-        order={order}
-        onSort={handleSort}
-      />
+    <div className={`min-h-screen w-full py-8 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
+      <div className="container mx-auto bg-white dark:bg-gray-800 p-6 shadow-xl rounded-xl">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">User Management Dashboard</h1>
+          <Button variant="outlined" onClick={toggleTheme}>
+            {theme === 'dark' ? '🌞 Light Mode' : '🌙 Dark Mode'}
+          </Button>
+        </div>
+        <UserToolbar
+          onBlock={handleBlock}
+          onUnblock={handleUnblock}
+          onDelete={handleDelete}
+          selectedCount={selected.length}
+        />
+        <UserTable
+          users={users}
+          selected={selected}
+          onSelectAll={handleSelectAll}
+          onSelectRow={handleSelectRow}
+          order={order}
+          onSort={handleSort}
+        />
+      </div>
     </div>
   );
 };

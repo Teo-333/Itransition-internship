@@ -28,6 +28,9 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  transition-property: background-color, color;
+  transition-duration: 300ms;
+  transition-timing-function: ease-in-out;
 }
 
 h1 {
@@ -66,3 +69,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
