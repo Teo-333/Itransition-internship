@@ -20,8 +20,19 @@ const UserManagementPage: React.FC = () => {
   }, [order]);
 
   const fetchUsers = async () => {
-    const { data } = await axios.get<User[]>(`${API_URL}/users?order=${order}`);
-    setUsers(data);
+    try {
+      const response = await axios.get(`${API_URL}/users?order=${order}`);
+      const data = response.data;
+      if (Array.isArray(data)) {
+        setUsers(data);
+      } else {
+        console.error('❌ Unexpected response from /users:', data);
+        setUsers([]);
+      }
+    } catch (error) {
+      console.error('❌ Error fetching users:', error);
+      setUsers([]);
+    }
   };
 
   const handleSelectAll = (checked: boolean) => {
@@ -39,21 +50,33 @@ const UserManagementPage: React.FC = () => {
   };
 
   const handleBlock = async () => {
-    await axios.post(`${API_URL}/users/block`, { ids: selected });
-    fetchUsers();
-    setSelected([]);
+    try {
+      await axios.post(`${API_URL}/users/block`, { ids: selected });
+      fetchUsers();
+      setSelected([]);
+    } catch (error) {
+      console.error('❌ Error blocking users:', error);
+    }
   };
 
   const handleUnblock = async () => {
-    await axios.post(`${API_URL}/users/unblock`, { ids: selected });
-    fetchUsers();
-    setSelected([]);
+    try {
+      await axios.post(`${API_URL}/users/unblock`, { ids: selected });
+      fetchUsers();
+      setSelected([]);
+    } catch (error) {
+      console.error('❌ Error unblocking users:', error);
+    }
   };
 
   const handleDelete = async () => {
-    await axios.post(`${API_URL}/users/delete`, { ids: selected });
-    fetchUsers();
-    setSelected([]);
+    try {
+      await axios.post(`${API_URL}/users/delete`, { ids: selected });
+      fetchUsers();
+      setSelected([]);
+    } catch (error) {
+      console.error('❌ Error deleting users:', error);
+    }
   };
 
   return (
