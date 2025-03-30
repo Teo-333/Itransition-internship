@@ -6,16 +6,20 @@ import { loginUser } from "../services/AuthService";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage("");
     try {
       const data = await loginUser(email, password);
       localStorage.setItem("token", data.token);
       navigate("/dashboard");
     } catch (error: any) {
-      alert(error.response.data.error || "Login failed.");
+      const errorText = error.response.data.error || "Login failed.";
+      setErrorMessage(errorText);
     }
   };
 
@@ -26,6 +30,7 @@ const LoginPage = () => {
           <Typography variant="h4" align="center" className="mb-6 font-semibold">
             Welcome Back
           </Typography>
+
           <form className="gap-4 pt-6 flex flex-col" onSubmit={handleLogin}>
             <TextField
               label="Email"
@@ -43,6 +48,13 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+
+            {errorMessage.includes("blocked") && (
+              <Typography className="text-center text-orange-500 font-medium">
+                {errorMessage}
+              </Typography>
+            )}
+
             <Button
               variant="contained"
               color="primary"
@@ -52,6 +64,7 @@ const LoginPage = () => {
             >
               Login
             </Button>
+
             <Typography className="text-center mt-4">
               Don't have an account?{" "}
               <Link to="/register" className="text-indigo-600 font-medium">
