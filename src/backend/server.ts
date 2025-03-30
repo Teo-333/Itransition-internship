@@ -6,11 +6,14 @@ import { fileURLToPath } from 'url';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import pkg from 'pg';
+import checkDBConnection from './utils/checkDB.js';
 const { Pool } = pkg;
 
 dotenv.config();
 
 const app = express();
+
+checkDBConnection();
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
