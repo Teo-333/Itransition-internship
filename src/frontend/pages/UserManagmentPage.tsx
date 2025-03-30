@@ -6,6 +6,8 @@ import axios from 'axios';
 import { Button } from '@mui/material';
 import { useTheme } from '../context/ThemeContext';
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const UserManagementPage: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [selected, setSelected] = useState<number[]>([]);
@@ -18,7 +20,7 @@ const UserManagementPage: React.FC = () => {
   }, [order]);
 
   const fetchUsers = async () => {
-    const { data } = await axios.get<User[]>(`http://localhost:5000/api/users?order=${order}`);
+    const { data } = await axios.get<User[]>(`${API_URL}/users?order=${order}`);
     setUsers(data);
   };
 
@@ -37,19 +39,19 @@ const UserManagementPage: React.FC = () => {
   };
 
   const handleBlock = async () => {
-    await axios.post('http://localhost:5000/api/users/block', { ids: selected });
+    await axios.post(`${API_URL}/users/block`, { ids: selected });
     fetchUsers();
     setSelected([]);
   };
 
   const handleUnblock = async () => {
-    await axios.post('http://localhost:5000/api/users/unblock', { ids: selected });
+    await axios.post(`${API_URL}/users/unblock`, { ids: selected });
     fetchUsers();
     setSelected([]);
   };
 
   const handleDelete = async () => {
-    await axios.post('http://localhost:5000/api/users/delete', { ids: selected });
+    await axios.post(`${API_URL}/users/delete`, { ids: selected });
     fetchUsers();
     setSelected([]);
   };

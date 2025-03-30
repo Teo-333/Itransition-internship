@@ -18,4 +18,4 @@ const checkDBConnection = async () => {
 };
 
 export default checkDBConnection;
-export { pool }; // You can import { pool } elsewhere
+export { pool }; 
