@@ -49,7 +49,9 @@ const UserTable: React.FC<Props> = ({ users, selected, onSelectAll, onSelectRow,
               </TableCell>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.email}</TableCell>
-              <TableCell>{new Date(user.lastLoggedIn).toLocaleString()}</TableCell>
+              <TableCell>
+               {new Date(user.lastLoggedIn.replace(" ", "T")).toLocaleString()}
+              </TableCell>
               <TableCell>
                 <span className={`px-2 py-1 rounded text-white ${user.blocked ? 'bg-red-500' : 'bg-green-500'}`}>
                   {user.blocked ? 'Blocked' : 'Active'}
