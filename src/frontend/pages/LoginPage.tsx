@@ -49,11 +49,12 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            {errorMessage.includes("blocked") && (
+            {(errorMessage.includes("blocked") || errorMessage.includes("Invalid")) && (
               <Typography className="text-center text-orange-500 font-medium">
                 {errorMessage}
               </Typography>
             )}
+
 
             <Button
               variant="contained"
