@@ -80,12 +80,14 @@ const UserManagementPage: React.FC = () => {
   };
 
   return (
-    <div className={`min-h-screen w-full py-8 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}>
+    <div className={`min-h-screen w-full py-8 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'}`}>
       <div className="container mx-auto bg-white dark:bg-gray-800 p-6 shadow-xl rounded-xl">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">User Management Dashboard</h1>
-          <Button variant="outlined" onClick={toggleTheme}>
-            {theme === 'dark' ? '🌞 Light Mode' : '🌙 Dark Mode'}
+          <Button variant="outlined" onClick={toggleTheme} sx={{
+            display: { xs: 'none', sm: 'block' },
+          }}>
+            {theme === 'dark' ? '🌞' : '🌙'}
           </Button>
         </div>
         <UserToolbar
