@@ -22,6 +22,7 @@ interface Props {
 }
 
 const formatDate = (dateString?: string): string => {
+  console.log('Original date string:', dateString);
   if (!dateString || dateString.trim() === '') return 'N/A';
   
   // Replace space with 'T' if necessary
