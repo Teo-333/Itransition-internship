@@ -23,7 +23,18 @@ interface Props {
 
 const formatDate = (dateString?: string): string => {
   if (!dateString || dateString.trim() === '') return 'N/A';
-  const isoString = dateString.includes('T') ? dateString : dateString.replace(' ', 'T');
+  
+  // Replace space with 'T' if necessary
+  let isoString = dateString.includes('T') ? dateString : dateString.replace(' ', 'T');
+
+  // Truncate fractional seconds to 3 digits (milliseconds)
+  isoString = isoString.replace(/(\.\d{3})\d+/, '$1');
+
+  // If no timezone info is present (ends neither with Z nor an offset), assume UTC by appending "Z"
+  if (!/Z|[+-]\d{2}:\d{2}$/.test(isoString)) {
+    isoString = isoString + 'Z';
+  }
+
   const date = new Date(isoString);
   return isNaN(date.getTime()) ? 'N/A' : date.toLocaleString();
 };
