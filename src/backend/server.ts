@@ -31,15 +31,11 @@ app.use('/api/users', userRoutes);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// if (process.env.NODE_ENV === 'production') {
-  console.log('Production mode');
-  console.log(__dirname);
-  app.use(express.static(path.join(__dirname, '..')));
+app.use(express.static(path.join(__dirname, '..')));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'index.html'));
-  });
-// }
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

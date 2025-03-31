@@ -2,7 +2,7 @@ export interface User {
     id: number;
     name: string;
     email: string;
-    lastLoggedIn: string;
+    last_logged_in: string;
     blocked: boolean;
   }
   
