@@ -1,8 +1,15 @@
 import React from 'react';
 import { User } from '../../types/User';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Checkbox, Paper, TableSortLabel
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Checkbox,
+  Paper,
+  TableSortLabel,
 } from '@mui/material';
 
 interface Props {
@@ -14,7 +21,21 @@ interface Props {
   onSort: () => void;
 }
 
-const UserTable: React.FC<Props> = ({ users, selected, onSelectAll, onSelectRow, order, onSort }) => {
+const formatDate = (dateString?: string): string => {
+  if (!dateString || dateString.trim() === '') return 'N/A';
+  const isoString = dateString.includes('T') ? dateString : dateString.replace(' ', 'T');
+  const date = new Date(isoString);
+  return isNaN(date.getTime()) ? 'N/A' : date.toLocaleString();
+};
+
+const UserTable: React.FC<Props> = ({
+  users,
+  selected,
+  onSelectAll,
+  onSelectRow,
+  order,
+  onSort,
+}) => {
   const isAllSelected = users.length > 0 && selected.length === users.length;
 
   return (
@@ -49,13 +70,13 @@ const UserTable: React.FC<Props> = ({ users, selected, onSelectAll, onSelectRow,
               </TableCell>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.email}</TableCell>
+              <TableCell>{formatDate(user.lastLoggedIn)}</TableCell>
               <TableCell>
-                {user.lastLoggedIn
-                  ? new Date(user.lastLoggedIn.replace(" ", "T")).toLocaleString()
-                  : "N/A"}
-              </TableCell>
-              <TableCell>
-                <span className={`px-2 py-1 rounded text-white ${user.blocked ? 'bg-red-500' : 'bg-green-500'}`}>
+                <span
+                  className={`px-2 py-1 rounded text-white ${
+                    user.blocked ? 'bg-red-500' : 'bg-green-500'
+                  }`}
+                >
                   {user.blocked ? 'Blocked' : 'Active'}
                 </span>
               </TableCell>
