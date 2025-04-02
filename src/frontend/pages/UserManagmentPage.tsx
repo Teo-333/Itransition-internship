@@ -5,6 +5,8 @@ import { User } from '../../types/User';
 import axios from 'axios';
 import { Button } from '@mui/material';
 import { useTheme } from '../context/ThemeContext';
+import { jwtDecode } from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -14,6 +16,7 @@ const UserManagementPage: React.FC = () => {
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
 
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUsers();
@@ -52,6 +55,22 @@ const UserManagementPage: React.FC = () => {
   const handleBlock = async () => {
     try {
       await axios.post(`${API_URL}/users/block`, { ids: selected });
+
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decoded: any = jwtDecode(token);
+        const currentUserEmail = decoded.email;
+
+        const blockedUsers = users.filter(user => selected.includes(user.id));
+        const isSelfBlocked = blockedUsers.some(user => user.email === currentUserEmail);
+
+        if (isSelfBlocked) {
+          localStorage.removeItem('token');
+          navigate('/login');
+          return;
+        }
+      }
+
       fetchUsers();
       setSelected([]);
     } catch (error) {
